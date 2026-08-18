@@ -20,3 +20,17 @@ Route::get('/', function () {
 Route::get('/productos', function () {
     return view('productos');
 });
+
+
+Route::post('/pedido', function () {
+
+    $nombre = request('nombre');
+    $correo = request('correo');
+    $pedido = request('pedido');
+
+    return view('pedido-recibido', [
+        'nombre' => $nombre,
+        'correo' => $correo,
+        'pedido' => $pedido
+    ]);
+});

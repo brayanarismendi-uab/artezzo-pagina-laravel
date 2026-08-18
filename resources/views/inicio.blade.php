@@ -22,7 +22,8 @@
 
         <h2>Contáctanos</h2>
 
-        <form id="form-pedido" action="#" method="POST" novalidate>
+        <form id="form-pedido" action="{{ url('/pedido') }}" method="POST" novalidate>
+            @csrf
 
             <label for="nombre">Tu nombre</label><br>
 
