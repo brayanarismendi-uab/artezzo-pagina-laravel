@@ -2,7 +2,7 @@
 
 @section('titulo', 'Pedido recibido')
 
-@section('contenido')
+@section('content')
 
     <section>
 

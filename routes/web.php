@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Producto;
+use App\Models\Libro;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +21,29 @@ Route::get('/', function () {
 });
 
 Route::get('/productos', function () {
-    return view('productos');
+
+    $productos = Producto::all();
+
+    return view('productos', [
+        'productos' => $productos
+    ]);
 });
+
+
+Route::get('/productos/nuevo', function () {
+    return view('productos-nuevo');
+})->middleware('auth');
+
+Route::post('/productos', function () {
+
+    Producto::create([
+        'nombre' => request('nombre'),
+        'precio' => request('precio'),
+    ]);
+
+    return redirect('/productos');
+
+})->middleware('auth');
 
 
 Route::post('/pedido', function () {
@@ -33,4 +57,41 @@ Route::post('/pedido', function () {
         'correo' => $correo,
         'pedido' => $pedido
     ]);
+});
+Auth::routes(['register' => false]);
+
+
+
+
+
+
+
+
+Route::get('/libros', function () {
+    $libros = Libro::all();
+
+    return view('libros', compact('libros'));
+});
+
+Route::get('/libros/nuevo', function () {
+    return view('libros-nuevo');
+});
+
+Route::post('/libros/nuevo', function () {
+    $datos = request()->validate([
+        'titulo' => 'required',
+        'precio' => 'required|integer'
+    ], [
+        
+        'titulo.required' => 'falta el titulo del libro',
+        'precio.required' => 'falta el precio del libro',
+        'precio.integer' => 'ese precio no es un número entero'
+    ]);
+
+    Libro::create([
+        'titulo' => $datos['titulo'],
+        'precio' => $datos['precio']
+    ]);
+
+    return redirect('/libros');
 });

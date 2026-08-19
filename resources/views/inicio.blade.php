@@ -2,7 +2,7 @@
 
 @section('titulo', 'Artezzo')
 
-@section('contenido')
+@section('content')
 
     <section align="center">
 

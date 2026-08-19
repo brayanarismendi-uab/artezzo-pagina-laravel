@@ -1,34 +1,46 @@
 @extends('layouts.app')
 
-@section('titulo', 'Productos')
+@section('content')
 
-@section('contenido')
+    <div class="container">
 
-    <section>
-        <h3>Embutidos</h3>
+        <h1>Productos</h1>
 
-        <ul>
-            <li>Salchichas</li>
-            <li>Chorizos</li>
-            <li>Mortadela</li>
-        </ul>
-    </section>
+        <section>
 
-    <section>
-        <h3>Pellet para freír</h3>
+            <h2>Productos disponibles</h2>
 
-        <ul>
-            <li>Chicharrón de papa</li>
-            <li>Chicharrón de trigo</li>
-        </ul>
-    </section>
+            @if($productos->count() > 0)
 
-    <section>
-        <h3>Otros</h3>
+                <ul>
 
-        <ul>
-            <li>Lava vajillas</li>
-        </ul>
-    </section>
+                    @foreach($productos as $producto)
+
+                        <li>
+                            {{ $producto->nombre }}
+                            - Bs. {{ number_format($producto->precio, 2) }}
+                        </li>
+
+                    @endforeach
+
+                </ul>
+
+            @else
+
+                <p>No hay productos registrados.</p>
+
+            @endif
+
+        </section>
+
+        @auth
+            <p>
+                <a href="{{ url('/productos/nuevo') }}">
+                    Agregar nuevo producto
+                </a>
+            </p>
+        @endauth
+
+    </div>
 
 @endsection
